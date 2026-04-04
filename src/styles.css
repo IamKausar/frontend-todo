@@ -3,6 +3,35 @@
   text-align: center;
 }
 
+input {
+  padding: 0.25rem;
+}
+
+span {
+  margin-left: 0.25rem;
+}
+
+button {
+  margin-left: 1rem;
+}
+
+.list-container {
+  display: flex;
+  justify-content: center;
+}
+
+.list-ul-container {
+  width: 18rem;
+}
+
 .todo-item {
-  /* list-style: none; */
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.5rem;
+}
+
+.strike {
+  text-decoration: line-through;
 }

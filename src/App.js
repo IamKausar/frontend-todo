@@ -6,17 +6,33 @@ export default function App() {
   const [todoList, setTodoList] = useState([]);
 
   const inputUpdate = (e) => {
-    setInputvalue(e.target.value);
+    setInputvalue(e.target?.value);
   };
 
   const handleAddTodo = () => {
+    if (!inputValue.trim()) return;
+
     const item = {
-      id: 0,
+      id: Date.now(),
       title: inputValue,
-      completed: true,
+      completed: false,
     };
     setTodoList([...todoList, item]);
     setInputvalue("");
+  };
+
+  const toggleCheckbox = (id) => {
+    const copyList = [...todoList];
+    copyList.map((todo) => {
+      if (todo.id === id) {
+        todo.completed = !todo.completed;
+      }
+    });
+    setTodoList([...copyList]);
+  };
+
+  const handleDelete = (id) => {
+    setTodoList((prev) => prev.filter((todo) => todo.id !== id));
   };
 
   return (
@@ -32,13 +48,27 @@ export default function App() {
         />
         <button onClick={handleAddTodo}>Add</button>
       </div>
-      <div>
-        <ul>
+      <div className="list-container">
+        <ul className="list-ul-container">
           {todoList.map((todo) => (
-            <li className="todo-item">
-              <input type="checkbox" checked={todo.completed} />
-              <span>{todo.title}</span>
-              <button>Delete</button>
+            <li className="todo-item" key={todo.id}>
+              <div>
+                <input
+                  type="checkbox"
+                  checked={todo.completed}
+                  onChange={() => toggleCheckbox(todo.id)}
+                />
+                <span className={todo.completed ? "strike" : ""}>
+                  {todo.title}
+                </span>
+              </div>
+              <button
+                onClick={() => {
+                  handleDelete(todo.id);
+                }}
+              >
+                Delete
+              </button>
             </li>
           ))}
         </ul>
